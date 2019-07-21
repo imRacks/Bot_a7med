@@ -1,0 +1,25 @@
+let fs = require('fs')
+let antibots = JSON.parse(fs.readFileSync('./antibots.json', 'utf8'))
+client.on('message', message => {
+if(message.content.startsWith(# + 'toggleantibots')) {
+    if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
+    if(!antibots[message.guild.id]) antibots[message.guild.id] = {
+        onoff: 'Off'
+        }
+        if(antibots[message.guild.id].onoff === 'Off') return [message.channel.send(`**✅ The Antibots Is __𝐎𝐍__ !**`), antibots[message.guild.id].onoff = 'On']
+        if(antibots[message.guild.id].onoff === 'On') return [message.channel.send(`**⛔ The Antibots Is __𝐎𝐅𝐅__ !**`), antibots[message.guild.id].onoff = 'Off']
+        fs.writeFile("./antibots.json", JSON.stringify(antibots), (err) => {
+            if (err) console.error(err)
+        })
+}
+})
+client.on("guildMemberAdd", member => {
+    if(!antibots[message.guild.id]) antibots[message.guild.id] = {
+        onoff: 'Off'
+    }
+    if(antibots[message.guild.id] === 'Off') return;
+if(member.user.bot) return member.ban()
+fs.writeFile("./antibots.json", JSON.stringify(antibots), (err) => {
+    if (err) console.error(err)
+})
+})
